@@ -5,6 +5,11 @@
     'Lucida Sans', Arial, sans-serif;
 }
 
+/* text-colors */
+.gray-text {
+  color: rgb(133, 133, 133);
+}
+
 .navbar-container {
   background-color: #fff;
   border-bottom: 1px solid #e5e5e5;
@@ -44,6 +49,21 @@
   height: 5rem;
   margin-left: 5rem;
   margin-right: 5rem;
+}
+
+.dropdown-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.dropdown-menu {
+  border: none;
+  font-size: medium;
+}
+
+.dropdown-menu:focus {
+  outline: none;
 }
 
 /* media queries */
