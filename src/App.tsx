@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import ActionBar from './ActionBar';
+import Board from './Board';
 import './App.css';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div>
       <Navbar />
       <ActionBar />
+      <Board />
     </div>
   );
 }
