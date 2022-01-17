@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const Dropdown = ({ ...props }) => {
   const { label, options } = props;
 
-  const [value, setValue] = useState(options[1].name);
+  const [value, setValue] = useState(options[0].name);
   const handleChange = (e: any) => {
     e.preventDefault();
     setValue(e.target.value);
