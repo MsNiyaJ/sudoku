@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Box = () => {
-  return <div className="box"></div>;
+const Box = ({ value = '' }) => {
+  return <div className="box">{value}</div>;
 };
 
 export default Box;
