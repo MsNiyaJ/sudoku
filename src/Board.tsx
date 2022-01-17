@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Box from './Box';
 import boards from './boards';
+import { randomNumList } from './helper/randomize';
 
 // A two-dimensional array made up of Box components. 9x9 by default.
 const rows: any = [];
@@ -10,6 +11,11 @@ for (let i = 0; i < 9; i++) {
     rows[i].push(<Box key={j} />);
   }
 }
+
+const setupBoard = () => {
+  populateBoard();
+  removeNumbers();
+};
 
 const populateBoard = () => {
   const rows = Array.from(document.querySelectorAll('.row'));
@@ -25,10 +31,44 @@ const populateBoard = () => {
   }
 };
 
+// Remove numbers from the board based on the board's difficulty
+const removeNumbers = () => {
+  // Select all boxes on the board
+  const boxes = Array.from(document.querySelectorAll('.box'));
+
+  // Get the difficulty of the game
+  const select = document.getElementById(
+    'difficulty-select'
+  ) as HTMLSelectElement;
+  let difficulty = select.options[select.selectedIndex].value;
+
+  let boxToClear: string | any[] = [];
+  // If the difficulty is easy, remove 25 numbers
+  if (difficulty === 'Easy') {
+    boxToClear = randomNumList(25, 0, 80);
+  }
+  // If the difficulty is Medium, remove 40 numbers
+  if (difficulty === 'Medium') {
+    boxToClear = randomNumList(40, 0, 80);
+  }
+  // If the difficulty is Hard, remove 50 numbers
+  if (difficulty === 'Hard') {
+    boxToClear = randomNumList(50, 0, 80);
+  }
+
+  // For each box, remove number, make the text blue, and make content editable
+  for (let i = 0; i < boxToClear.length; i++) {
+    const j = boxToClear[i];
+    boxes[j].innerHTML = '';
+    boxes[j].setAttribute('contenteditable', 'true');
+    boxes[j].classList.add('blue-text');
+  }
+};
+
 const Board = () => {
   // if the component is mounted, populate the board with the correct values
   useEffect(() => {
-    populateBoard();
+    setupBoard();
   }, []);
 
   return (
