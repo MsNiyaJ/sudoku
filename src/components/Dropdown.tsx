@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { DifficultyListProps } from './DifficultyList';
+import { DifficultyListProps } from '../DifficultyList';
 
 export interface DropdownProps {
   label: string;

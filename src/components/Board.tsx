@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Box from './Box';
-import boards from './boards';
-import { getRandomCellsToClear } from './helper/randomize';
+import boards from '../boards';
+import { getRandomCellsToClear } from '../helper/randomize';
 
 // A two-dimensional array made up of Box components. 9x9 by default.
 const rows: JSX.Element[][] = [];

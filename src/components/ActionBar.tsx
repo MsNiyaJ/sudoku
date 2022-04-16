@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { DifficultyList } from './DifficultyList';
+import { DifficultyList } from '../DifficultyList';
 import Dropdown from './Dropdown';
 
 export interface ActionBarProps {

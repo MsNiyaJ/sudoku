@@ -4,9 +4,9 @@ const Navbar = () => {
       <div className="navbar">
         <h1 className="logo-title">Sudoku</h1>
         <div className="nav-links">
-          <a href="/" className="nav-item">
+          <p className="nav-item">
             How to Play
-          </a>
+          </p>
         </div>
       </div>
     </div>

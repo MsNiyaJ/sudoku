@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import Navbar from './Navbar';
-import ActionBar from './ActionBar';
-import Board from './Board';
-import './App.css';
+import {useState} from 'react';
+import Navbar from './components/Navbar';
+import ActionBar from './components/ActionBar';
+import Board from './components/Board';
+import './global.css';
 
 function App() {
 
