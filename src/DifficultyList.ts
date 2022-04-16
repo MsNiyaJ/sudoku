@@ -1,3 +1,8 @@
+export interface DifficultyListProps {
+  id: number;
+  name: string;
+}
+
 export const DifficultyList = [
   {
     id: 1,

@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { DifficultyListProps } from './DifficultyList';
 
-const Dropdown = ({ ...props }) => {
-  const { label, options } = props;
+export interface DropdownProps {
+  label: string;
+  options: DifficultyListProps[];
+  setDifficulty: Dispatch<SetStateAction<string>>;
+}
+
+const Dropdown = ({ ...props }: DropdownProps) => {
+  const { label, options, setDifficulty } = props;
 
   const [value, setValue] = useState(options[0].name);
   const handleChange = (e: any) => {
     e.preventDefault();
     setValue(e.target.value);
+    setDifficulty(e.target.value);
   };
 
   return (
@@ -15,10 +23,10 @@ const Dropdown = ({ ...props }) => {
       <select
         id="difficulty-select"
         value={value}
-        className="dropdown-menu gray-text"
+        className="dropdown-menu blue-text"
         onChange={handleChange}
       >
-        {options.map((option: { id: number; name: string }) => {
+        {options.map((option: DifficultyListProps) => {
           return <option key={option.id}>{option.name}</option>;
         })}
       </select>

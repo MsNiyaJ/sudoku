@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Box from './Box';
 import boards from './boards';
-import { randomNumList } from './helper/randomize';
+import { getRandomCellsToClear } from './helper/randomize';
 
 // A two-dimensional array made up of Box components. 9x9 by default.
-const rows: any = [];
+const rows: JSX.Element[][] = [];
 for (let i = 0; i < 9; i++) {
   rows.push([]);
   for (let j = 0; j < 9; j++) {
@@ -12,14 +12,21 @@ for (let i = 0; i < 9; i++) {
   }
 }
 
-const setupBoard = () => {
-  populateBoard();
-  removeNumbers();
+// Reset the board to its original state
+const resetBoard = () => {
+  const boxes = Array.from(document.querySelectorAll('.box'));
+
+  // For each box, set the value to empty string, remove the blue text class, and set content editable to false
+  for (let i = 0; i < boxes.length; i++) {
+    boxes[i].innerHTML = '';
+    boxes[i].classList.remove('blue-text');
+    boxes[i].setAttribute('contenteditable', 'false');
+  }
 };
 
+// Populate the board with numbers
 const populateBoard = () => {
   const rows = Array.from(document.querySelectorAll('.row'));
-
   // loop through each row
   for (let i = 0; i < rows.length; i++) {
     // loop through each box in the row
@@ -32,44 +39,40 @@ const populateBoard = () => {
 };
 
 // Remove numbers from the board based on the board's difficulty
-const removeNumbers = () => {
+const removeNumbers = (difficulty: string) => {
   // Select all boxes on the board
   const boxes = Array.from(document.querySelectorAll('.box'));
 
-  // Get the difficulty of the game
-  const select = document.getElementById(
-    'difficulty-select'
-  ) as HTMLSelectElement;
-  let difficulty = select.options[select.selectedIndex].value;
-
-  let boxToClear: string | any[] = [];
+  let boxesToClear: number[] = [];
   // If the difficulty is easy, remove 25 numbers
   if (difficulty === 'Easy') {
-    boxToClear = randomNumList(25, 0, 80);
+    boxesToClear = getRandomCellsToClear(25, 0, 80);
   }
   // If the difficulty is Medium, remove 40 numbers
   if (difficulty === 'Medium') {
-    boxToClear = randomNumList(40, 0, 80);
+    boxesToClear = getRandomCellsToClear(40, 0, 80);
   }
   // If the difficulty is Hard, remove 50 numbers
   if (difficulty === 'Hard') {
-    boxToClear = randomNumList(50, 0, 80);
+    boxesToClear = getRandomCellsToClear(50, 0, 80);
   }
 
   // For each box, remove number, make the text blue, and make content editable
-  for (let i = 0; i < boxToClear.length; i++) {
-    const j = boxToClear[i];
+  for (let i = 0; i < boxesToClear.length; i++) {
+    const j = boxesToClear[i];
     boxes[j].innerHTML = '';
     boxes[j].setAttribute('contenteditable', 'true');
     boxes[j].classList.add('blue-text');
   }
 };
-
-const Board = () => {
-  // if the component is mounted, populate the board with the correct values
+const Board = ({ difficulty = "Easy" }: { difficulty: string }) => {
+  
+  // When the component is mounted, set up the board
   useEffect(() => {
-    setupBoard();
-  }, []);
+    resetBoard();
+    populateBoard();
+    removeNumbers(difficulty);
+  }, [difficulty]);
 
   return (
     <div className="board-container">

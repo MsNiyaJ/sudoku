@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from './Navbar';
 import ActionBar from './ActionBar';
 import Board from './Board';
 import './App.css';
 
 function App() {
+
+  const [difficulty, setDifficulty] = useState('Easy');
+
   return (
-    <div>
+    <>
       <Navbar />
-      <ActionBar />
-      <Board />
-    </div>
+      <ActionBar setDifficulty={setDifficulty} />
+      <Board difficulty={difficulty} />
+    </>
   );
 }
 
