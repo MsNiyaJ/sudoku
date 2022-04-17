@@ -1,7 +1,8 @@
 import {useState} from 'react';
 import Navbar from './components/Navbar';
 import ActionBar from './components/ActionBar';
-import Board from './components/Board';
+// import Board from './components/Board';
+import Board2 from './components/Board2';
 import './global.css';
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
     <>
       <Navbar />
       <ActionBar setDifficulty={setDifficulty} />
-      <Board difficulty={difficulty} />
+      {/* <Board difficulty={difficulty} /> */}
+      <Board2 difficulty={difficulty} />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Box from './Box';
 import boards from '../boards';
-import { getRandomCellsToClear } from '../helper/randomize';
+import { getRandomArrOfNums } from '../helper/randomize';
 
 // A two-dimensional array made up of Box components. 9x9 by default.
 const rows: JSX.Element[][] = [];
@@ -46,15 +46,15 @@ const removeNumbers = (difficulty: string) => {
   let boxesToClear: number[] = [];
   // If the difficulty is easy, remove 25 numbers
   if (difficulty === 'Easy') {
-    boxesToClear = getRandomCellsToClear(25, 0, 80);
+    boxesToClear = getRandomArrOfNums(25, 0, 80);
   }
   // If the difficulty is Medium, remove 40 numbers
   if (difficulty === 'Medium') {
-    boxesToClear = getRandomCellsToClear(40, 0, 80);
+    boxesToClear = getRandomArrOfNums(40, 0, 80);
   }
   // If the difficulty is Hard, remove 50 numbers
   if (difficulty === 'Hard') {
-    boxesToClear = getRandomCellsToClear(50, 0, 80);
+    boxesToClear = getRandomArrOfNums(50, 0, 80);
   }
 
   // For each box, remove number, make the text blue, and make content editable
@@ -65,8 +65,7 @@ const removeNumbers = (difficulty: string) => {
     boxes[j].classList.add('blue-text');
   }
 };
-const Board = ({ difficulty = "Easy" }: { difficulty: string }) => {
-  
+const Board = ({ difficulty = 'Easy' }: { difficulty: string }) => {
   // When the component is mounted, set up the board
   useEffect(() => {
     resetBoard();
