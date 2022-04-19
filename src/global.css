@@ -105,8 +105,27 @@
   border: thin solid rgb(192, 192, 192);
   display: flex;
   justify-content: center;
+  text-align: center;
   align-items: center;
   font-size: 1.5rem;
+}
+
+/* input {
+  background-color: transparent;
+  color: black;
+} */
+
+/* Remove arrows from number input  */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /* media queries */

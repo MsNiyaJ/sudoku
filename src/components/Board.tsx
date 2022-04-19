@@ -33,7 +33,7 @@ const populateBoard = () => {
     const boxes = Array.from(rows[i].querySelectorAll('.box'));
     for (let j = 0; j < boxes.length; j++) {
       // set the value of the box
-      boxes[j].innerHTML = `${boards[0].board1[i][j]}`;
+      boxes[j].innerHTML = `${boards[0][i][j]}`;
     }
   }
 };
