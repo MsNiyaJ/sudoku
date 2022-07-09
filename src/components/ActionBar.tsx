@@ -1,15 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { DifficultyList } from '../DifficultyList';
+import React from 'react';
 import Dropdown from './Dropdown';
 
-export interface ActionBarProps {
-  setDifficulty: Dispatch<SetStateAction<string>>;
-}
-
-const ActionBar = ({ setDifficulty }: ActionBarProps) => {
+const ActionBar = () => {
   return (
     <div className="action-bar">
-      <Dropdown setDifficulty={setDifficulty} label="Difficulty" options={DifficultyList} />
+      <Dropdown />
       <p className="timer">00:00</p>
     </div>
   );

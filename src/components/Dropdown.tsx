@@ -1,32 +1,44 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { DifficultyListProps } from '../DifficultyList';
+import React, { useContext } from 'react';
+import { DifficultyListType, SudokuContextType } from '../types';
+import { SudokuContext } from '../context/sudokuContext';
 
-export interface DropdownProps {
-  label: string;
-  options: DifficultyListProps[];
-  setDifficulty: Dispatch<SetStateAction<string>>;
-}
+const difficultyList: DifficultyListType[] = [
+  {
+    id: 1,
+    name: 'Easy',
+  },
+  {
+    id: 2,
+    name: 'Medium',
+  },
+  {
+    id: 3,
+    name: 'Hard',
+  },
+];
 
-const Dropdown = ({ ...props }: DropdownProps) => {
-  const { label, options, setDifficulty } = props;
+const Dropdown: React.FC = () => {
+  // Get the context
+  const { difficulty, changeDifficulty } = useContext(
+    SudokuContext
+  ) as SudokuContextType;
 
-  const [value, setValue] = useState(options[0].name);
-  const handleChange = (e: any) => {
-    e.preventDefault();
-    setValue(e.target.value);
-    setDifficulty(e.target.value);
+  // Handle the change of difficulty
+  const handleChange = (e: { target: { value: string } }) => {
+    const newDifficulty = e.target.value;
+    changeDifficulty(newDifficulty); // update context
   };
 
   return (
     <div className="dropdown-container">
-      <p>{label}: </p>
+      <p>Difficulty: </p>
       <select
         id="difficulty-select"
-        value={value}
+        value={difficulty}
         className="dropdown-menu blue-text"
         onChange={handleChange}
       >
-        {options.map((option: DifficultyListProps) => {
+        {difficultyList.map((option) => {
           return <option key={option.id}>{option.name}</option>;
         })}
       </select>
