@@ -1,89 +1,89 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import Row from './Row';
 import Box from './Box';
 import boards from '../boards';
-import { getRandomArrOfNums } from '../helper/randomize';
+import { getRandomNum, getRandomArrOfNums } from '../helper/randomize';
+import { SudokuContextType } from '../types';
+import { SudokuContext } from '../context/sudokuContext';
 
-// A two-dimensional array made up of Box components. 9x9 by default.
-const rows: JSX.Element[][] = [];
-for (let i = 0; i < 9; i++) {
-  rows.push([]);
-  for (let j = 0; j < 9; j++) {
-    rows[i].push(<Box key={j} />);
+class BoardClass {
+  board: (string | number)[][];
+  timer: number;
+
+  constructor(difficulty: string) {
+    this.board = this.createBoard(difficulty);
+    this.timer = 0;
   }
+
+  createBoard = (difficulty: string) => {
+    const randomBoard = this.getRandomBoard();
+
+    // Copy the board to prevent altering the original
+    const newBoard: (string | number)[][] = randomBoard.map((row) => [...row]);
+    this.removeNumbers(newBoard, difficulty);
+
+    return newBoard;
+  };
+
+  private getRandomBoard = (): number[][] => {
+    return boards[getRandomNum(0, boards.length - 1)];
+  };
+
+  private removeNumbers = (
+    board: (string | number)[][],
+    difficulty: string = 'Easy'
+  ) => {
+    const newBoard: (string | number)[][] = [...board];
+
+    let boxesToClear: number[] = [];
+    // If the difficulty is easy, remove 25 numbers
+    if (difficulty === 'Easy') {
+      boxesToClear = getRandomArrOfNums(25, 0, 80);
+    }
+    // If the difficulty is Medium, remove 40 numbers
+    if (difficulty === 'Medium') {
+      boxesToClear = getRandomArrOfNums(40, 0, 80);
+    }
+    // If the difficulty is Hard, remove 50 numbers
+    if (difficulty === 'Hard') {
+      boxesToClear = getRandomArrOfNums(50, 0, 80);
+    }
+
+    // A counter to keep track of what index we are on
+    let counter: number = 0;
+
+    // Find the box we want to clear and set the value to empty string
+    for (let i = 0; i < newBoard.length; i++) {
+      for (let j = 0; j < newBoard[i].length; j++) {
+        if (boxesToClear.includes(counter)) {
+          newBoard[i][j] = '';
+        }
+        counter++;
+      }
+    }
+  };
 }
 
-// Reset the board to its original state
-const resetBoard = () => {
-  const boxes = Array.from(document.querySelectorAll('.box'));
+const Board = () => {
+  const { difficulty } = useContext(SudokuContext) as SudokuContextType;
 
-  // For each box, set the value to empty string, remove the blue text class, and set content editable to false
-  for (let i = 0; i < boxes.length; i++) {
-    boxes[i].innerHTML = '';
-    boxes[i].classList.remove('blue-text');
-    boxes[i].setAttribute('contenteditable', 'false');
-  }
-};
-
-// Populate the board with numbers
-const populateBoard = () => {
-  const rows = Array.from(document.querySelectorAll('.row'));
-  // loop through each row
-  for (let i = 0; i < rows.length; i++) {
-    // loop through each box in the row
-    const boxes = Array.from(rows[i].querySelectorAll('.box'));
-    for (let j = 0; j < boxes.length; j++) {
-      // set the value of the box
-      boxes[j].innerHTML = `${boards[0][i][j]}`;
-    }
-  }
-};
-
-// Remove numbers from the board based on the board's difficulty
-const removeNumbers = (difficulty: string) => {
-  // Select all boxes on the board
-  const boxes = Array.from(document.querySelectorAll('.box'));
-
-  let boxesToClear: number[] = [];
-  // If the difficulty is easy, remove 25 numbers
-  if (difficulty === 'Easy') {
-    boxesToClear = getRandomArrOfNums(25, 0, 80);
-  }
-  // If the difficulty is Medium, remove 40 numbers
-  if (difficulty === 'Medium') {
-    boxesToClear = getRandomArrOfNums(40, 0, 80);
-  }
-  // If the difficulty is Hard, remove 50 numbers
-  if (difficulty === 'Hard') {
-    boxesToClear = getRandomArrOfNums(50, 0, 80);
-  }
-
-  // For each box, remove number, make the text blue, and make content editable
-  for (let i = 0; i < boxesToClear.length; i++) {
-    const j = boxesToClear[i];
-    boxes[j].innerHTML = '';
-    boxes[j].setAttribute('contenteditable', 'true');
-    boxes[j].classList.add('blue-text');
-  }
-};
-const Board = ({ difficulty = 'Easy' }: { difficulty: string }) => {
-  // When the component is mounted, set up the board
-  useEffect(() => {
-    resetBoard();
-    populateBoard();
-    removeNumbers(difficulty);
-  }, [difficulty]);
+  const newBoard = new BoardClass(difficulty);
+  const { board } = newBoard;
 
   return (
     <div className="board-container">
       <div className="board">
-        {/* Each row should display 9 boxes (9x9) */}
-        {rows.map((row: any, i: number) => {
-          return (
-            <div key={i} className="row">
-              {row.map((box: any) => box)}
-            </div>
-          );
-        })}
+        {board.map((row, i) => (
+          <Row key={i}>
+            {row.map((value, j) => (
+              <Box
+                key={j}
+                value={value}
+                disabled={value === '' ? false : true}
+              />
+            ))}
+          </Row>
+        ))}
       </div>
     </div>
   );
