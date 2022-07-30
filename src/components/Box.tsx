@@ -1,25 +1,29 @@
 import { useState } from 'react';
+import { toNumber } from '../helper/toNumber';
 export interface BoxProps {
   value?: string | number;
-  disabled?: boolean; // true if value is an empty string
+  disabled: boolean; // true if value is an empty string
 }
 
 const Box = ({ value = '', disabled = false }: BoxProps) => {
-  const [boxValue, setValue] = useState(value);
+  const [boxValue, setValue] = useState<string | number>(value);
 
   const onChange = (e: any) => {
-    setValue(e.target.value);
+    const value: number | string = toNumber(e.target.value);
+
+    if (value === 0) setValue('');
+    else if (!isNaN(value)) setValue(value);
   };
 
   return (
     <div>
       <input
-        type="number"
+        disabled={disabled}
+        type="text"
         className="box"
         onChange={onChange}
-        value={value}
+        value={boxValue}
         maxLength={1}
-        disabled={disabled}
       />
     </div>
   );
