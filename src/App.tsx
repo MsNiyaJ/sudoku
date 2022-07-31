@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar';
 import ActionBar from './components/ActionBar';
-import Board from './components/Board';
+import Game from './components/Game';
 import SudokuProvider from './context/sudokuContext';
 import './global.css';
 
@@ -9,7 +9,7 @@ function App() {
     <SudokuProvider>
       <Navbar />
       <ActionBar />
-      <Board />
+      <Game />
     </SudokuProvider>
   );
 }

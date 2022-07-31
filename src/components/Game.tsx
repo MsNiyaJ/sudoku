@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import Row from './Row';
 import Box from './Box';
 import boards from '../boards';
@@ -6,7 +6,7 @@ import { getRandomNum, getRandomArrOfNums } from '../helper/randomize';
 import { SudokuContextType } from '../types';
 import { SudokuContext } from '../context/sudokuContext';
 
-class BoardClass {
+class Board {
   board: (string | number)[][];
   timer: number;
 
@@ -64,10 +64,10 @@ class BoardClass {
   };
 }
 
-const Board = () => {
+const Game = () => {
   const { difficulty } = useContext(SudokuContext) as SudokuContextType;
 
-  const newBoard = new BoardClass(difficulty);
+  const newBoard = new Board(difficulty);
   const { board } = newBoard;
 
   return (
@@ -89,4 +89,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default Game;
