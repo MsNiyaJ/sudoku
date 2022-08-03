@@ -1,11 +1,16 @@
+export type Difficulty = 'Easy' | 'Medium' | 'Hard';
+
 export type DifficultyListType = {
   id: number;
-  name: string;
+  name: Difficulty;
 };
 
 export type SudokuContextType = {
-  board: (string | number)[][];
-  difficulty: string;
-  changeDifficulty: (difficulty: string) => void;
-  updateBoard: (board: (string | number)[][]) => void;
+  board: Board;
+  difficulty: Difficulty;
+  newGame: () => void;
+  changeDifficulty: (difficulty: Difficulty) => void;
+  setBoard: (board: Board) => void;
 };
+
+export type Board = (string | number)[][];

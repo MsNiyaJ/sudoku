@@ -1,85 +1,85 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Row from './Row';
 import Box from './Box';
-import boards from '../boards';
-import { getRandomNum, getRandomArrOfNums } from '../helper/randomize';
-import { SudokuContextType } from '../types';
+import { Board, Difficulty, SudokuContextType } from '../types';
 import { SudokuContext } from '../context/sudokuContext';
+import { getRandomArrOfNums, getRandomNum } from '../helper/randomize';
+import boards from '../boards';
 
-class Board {
-  board: (string | number)[][];
-  timer: number;
+class GameBoard {
+  board: Board;
+  difficulty: Difficulty;
 
-  constructor(difficulty: string) {
-    this.board = this.createBoard(difficulty);
-    this.timer = 0;
+  constructor() {
+    this.board = Array(9).fill(Array(9).fill(''));
+    this.difficulty = 'Easy';
   }
 
-  createBoard = (difficulty: string) => {
-    const randomBoard = this.getRandomBoard();
+  newBoard(difficulty: Difficulty) {
+    const randomBoard = boards[getRandomNum(0, boards.length - 1)];
+    this.setDifficulty(difficulty);
+    this.clearBoard();
+    this.board = randomBoard.map((row) => [...row]);
+    this.removeNumbers();
 
-    // Copy the board to prevent altering the original
-    const newBoard: (string | number)[][] = randomBoard.map((row) => [...row]);
-    this.removeNumbers(newBoard, difficulty);
+    return this.board;
+  }
+  private setDifficulty(difficulty: string) {
+    this.difficulty = difficulty as Difficulty;
+  }
 
-    return newBoard;
+  private clearBoard() {
+    this.board = Array(9).fill(Array(9).fill(''));
+  }
+
+  private getBoxesToRemove = () => {
+    enum boxesToClear {
+      Easy = 20,
+      Medium = 40,
+      Hard = 50,
+    }
+
+    // Clear a certain set of boxes based on the difficulty
+    const boxesToRemove = boxesToClear[this.difficulty];
+    return getRandomArrOfNums(boxesToRemove, 0, 80);
   };
 
-  private getRandomBoard = (): number[][] => {
-    return boards[getRandomNum(0, boards.length - 1)];
-  };
-
-  private removeNumbers = (
-    board: (string | number)[][],
-    difficulty: string = 'Easy'
-  ) => {
-    const newBoard: (string | number)[][] = [...board];
-
-    let boxesToClear: number[] = [];
-    // If the difficulty is easy, remove 25 numbers
-    if (difficulty === 'Easy') {
-      boxesToClear = getRandomArrOfNums(25, 0, 80);
-    }
-    // If the difficulty is Medium, remove 40 numbers
-    if (difficulty === 'Medium') {
-      boxesToClear = getRandomArrOfNums(40, 0, 80);
-    }
-    // If the difficulty is Hard, remove 50 numbers
-    if (difficulty === 'Hard') {
-      boxesToClear = getRandomArrOfNums(50, 0, 80);
-    }
-
-    // A counter to keep track of what index we are on
+  private removeNumbers() {
     let counter: number = 0;
 
+    const boxesToClear = this.getBoxesToRemove();
+
     // Find the box we want to clear and set the value to empty string
-    for (let i = 0; i < newBoard.length; i++) {
-      for (let j = 0; j < newBoard[i].length; j++) {
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
         if (boxesToClear.includes(counter)) {
-          newBoard[i][j] = '';
+          this.board[i][j] = '';
         }
         counter++;
       }
     }
-  };
+  }
 }
 
 const Game = () => {
-  const { difficulty } = useContext(SudokuContext) as SudokuContextType;
+  const { board, difficulty, setBoard } = useContext(
+    SudokuContext
+  ) as SudokuContextType;
 
-  const newBoard = new Board(difficulty);
-  const { board } = newBoard;
+  useEffect(() => {
+    setBoard(new GameBoard().newBoard(difficulty));
+  }, [difficulty, setBoard]);
 
   return (
     <div className="board-container">
       <div className="board">
-        {board.map((row, i) => (
-          <Row key={i}>
-            {row.map((value, j) => (
+        {board.map((row, rowIndex) => (
+          <Row key={rowIndex}>
+            {row.map((box, boxIndex) => (
               <Box
-                key={j}
-                value={value}
-                disabled={value === '' ? false : true}
+                key={boxIndex}
+                value={box}
+                disabled={box === '' ? false : true}
               />
             ))}
           </Row>
