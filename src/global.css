@@ -5,13 +5,17 @@
     'Lucida Sans', Arial, sans-serif;
 }
 
+:root {
+  --blue-bg-color: #0070f3;
+}
+
 /* text-colors */
 .gray-text {
   color: rgb(133, 133, 133);
 }
 
 .blue-text {
-  color: #0070f3;
+  color: var(--blue-bg-color);
   font-weight: 600;
 }
 
@@ -45,7 +49,7 @@
 }
 
 .nav-item:hover {
-  color: #0070f3;
+  color: var(--blue-bg-color);
 }
 
 .action-bar {
@@ -86,34 +90,46 @@
 }
 
 .row {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
 }
 
-.row:nth-child(3),
-.row:nth-child(6) {
-  border-bottom: 4px solid black;
+.row:nth-child(3n):not(:last-child) {
+  border-bottom: 3px solid black;
 }
 
-.box:nth-child(3),
-.box:nth-child(6) {
-  border-right: 4px solid black;
+.box:nth-child(3n) {
+  border-right: 3px solid black;
+}
+
+.box:nth-child(9n) {
+  border-right: 0;
 }
 
 .box {
   width: 2rem;
   height: 2rem;
-  border: thin solid rgb(192, 192, 192);
-  display: flex;
-  justify-content: center;
   text-align: center;
-  align-items: center;
   font-size: 1.5rem;
+  border: 1px solid rgb(208, 208, 208);
+  outline: 0;
+  cursor: pointer;
+}
+/* 
+.box:hover:not(.disabled), */
+.box:focus:not([disabled]) {
+  color: white;
+  background-color: var(--blue-bg-color);
 }
 
-/* input {
-  background-color: transparent;
-  color: black;
-} */
+.box:not([disabled]) {
+  color: var(--blue-bg-color);
+}
+
+.box[disabled] {
+  background-color: rgb(255, 255, 255);
+  color: rgb(48, 48, 48);
+}
 
 /* Remove arrows from number input  */
 /* Chrome, Safari, Edge, Opera */
@@ -124,7 +140,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
