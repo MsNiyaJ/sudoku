@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Difficulty, DifficultyListType, SudokuContextType } from '../types';
+import { Difficulty, DifficultyListType } from '../types';
 import { SudokuContext } from '../context/sudokuContext';
 
 const difficultyList: DifficultyListType[] = [
@@ -19,14 +19,15 @@ const difficultyList: DifficultyListType[] = [
 
 const Dropdown: React.FC = () => {
   // Get the context
-  const { difficulty, changeDifficulty } = useContext(
-    SudokuContext
-  ) as SudokuContextType;
+  const { game } = useContext(SudokuContext);
+
+  const [difficulty, setDifficulty] = React.useState(game.difficulty);
 
   // Handle the change of difficulty
   const handleChange = (e: { target: { value: string } }) => {
     const newDifficulty = e.target.value as Difficulty;
-    changeDifficulty(newDifficulty);
+    game.setDifficulty(newDifficulty); // update the context
+    setDifficulty(newDifficulty); // update the local state
   };
 
   return (

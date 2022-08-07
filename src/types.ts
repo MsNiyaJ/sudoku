@@ -1,3 +1,5 @@
+import { GameClass } from './context/sudokuContext';
+
 export type Difficulty = 'Easy' | 'Medium' | 'Hard';
 
 export type DifficultyListType = {
@@ -6,11 +8,7 @@ export type DifficultyListType = {
 };
 
 export type SudokuContextType = {
-  board: Board;
-  difficulty: Difficulty;
-  newGame: () => void;
-  changeDifficulty: (difficulty: Difficulty) => void;
-  setBoard: (board: Board) => void;
+  game: GameClass;
 };
 
 export type Board = (string | number)[][];
