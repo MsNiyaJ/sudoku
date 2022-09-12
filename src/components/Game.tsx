@@ -1,74 +1,58 @@
-import { useContext, useEffect } from 'react';
 import Row from './Row';
 import Box from './Box';
-import { Board, Difficulty, SudokuContextType } from '../types';
-import { SudokuContext } from '../context/sudokuContext';
-import { getRandomArrOfNums, getRandomNum } from '../helper/randomize';
 import boards from '../boards';
+import { Board, Difficulty } from '../types';
+import { getRandomNum, getRandomArrOfNums } from '../helper/randomize';
+import { useContext, useEffect, useState } from 'react';
+import { SudokuContext } from '../context/sudokuContext';
 
-class GameBoard {
-  board: Board;
-  difficulty: Difficulty;
-
-  constructor() {
-    this.board = Array(9).fill(Array(9).fill(''));
-    this.difficulty = 'Easy';
+const getBoxesToRemove = (difficulty: Difficulty) => {
+  enum boxesToClear {
+    Easy = 20,
+    Medium = 40,
+    Hard = 50,
   }
 
-  newBoard(difficulty: Difficulty) {
-    const randomBoard = boards[getRandomNum(0, boards.length - 1)];
-    this.setDifficulty(difficulty);
-    this.clearBoard();
-    this.board = randomBoard.map((row) => [...row]);
-    this.removeNumbers();
+  // Clear a certain set of boxes based on the difficulty
+  const boxesToRemove = boxesToClear[difficulty];
+  return getRandomArrOfNums(boxesToRemove, 0, 80);
+};
 
-    return this.board;
-  }
-  private setDifficulty(difficulty: string) {
-    this.difficulty = difficulty as Difficulty;
-  }
+const removeNumbers = (difficulty: Difficulty, board: Board) => {
+  let counter: number = 0;
 
-  private clearBoard() {
-    this.board = Array(9).fill(Array(9).fill(''));
-  }
+  const boxesToClear = getBoxesToRemove(difficulty);
 
-  private getBoxesToRemove = () => {
-    enum boxesToClear {
-      Easy = 20,
-      Medium = 40,
-      Hard = 50,
-    }
-
-    // Clear a certain set of boxes based on the difficulty
-    const boxesToRemove = boxesToClear[this.difficulty];
-    return getRandomArrOfNums(boxesToRemove, 0, 80);
-  };
-
-  private removeNumbers() {
-    let counter: number = 0;
-
-    const boxesToClear = this.getBoxesToRemove();
-
-    // Find the box we want to clear and set the value to empty string
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        if (boxesToClear.includes(counter)) {
-          this.board[i][j] = '';
-        }
-        counter++;
+  // Find the box we want to clear and set the value to empty string
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      if (boxesToClear.includes(counter)) {
+        board[i][j] = '';
       }
+      counter++;
     }
   }
-}
+};
+
+const newBoard = (difficulty: Difficulty, randomBoard: Board) => {
+  const board: Board = randomBoard.map((row) => [...row]);
+  removeNumbers(difficulty, board);
+  return board;
+};
 
 const Game = () => {
-  const { board, difficulty, setBoard } = useContext(
-    SudokuContext
-  ) as SudokuContextType;
+  const [winningBoard, setWinningBoard] = useState<Board>(
+    Array(9).fill(Array(9).fill(''))
+  );
+  const [board, setBoard] = useState<Board>(Array(9).fill(Array(9).fill('')));
+  const { difficulty } = useContext(SudokuContext);
 
   useEffect(() => {
-    setBoard(new GameBoard().newBoard(difficulty));
-  }, [difficulty, setBoard]);
+    const randomBoard = boards[getRandomNum(0, boards.length - 1)];
+    setWinningBoard(randomBoard);
+    const board = newBoard(difficulty, randomBoard);
+    setBoard(board);
+  }, [difficulty]);
 
   return (
     <div className="board-container">
@@ -79,6 +63,7 @@ const Game = () => {
               <Box
                 key={boxIndex}
                 value={box}
+                answer={winningBoard[rowIndex][boxIndex]}
                 disabled={box === '' ? false : true}
               />
             ))}

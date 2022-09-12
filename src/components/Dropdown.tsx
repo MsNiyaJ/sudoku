@@ -19,14 +19,11 @@ const difficultyList: DifficultyListType[] = [
 
 const Dropdown: React.FC = () => {
   // Get the context
-  const { game } = useContext(SudokuContext);
-
-  const [difficulty, setDifficulty] = React.useState(game.difficulty);
+  const { difficulty, setDifficulty } = useContext(SudokuContext);
 
   // Handle the change of difficulty
   const handleChange = (e: { target: { value: string } }) => {
     const newDifficulty = e.target.value as Difficulty;
-    game.setDifficulty(newDifficulty); // update the context
     setDifficulty(newDifficulty); // update the local state
   };
 

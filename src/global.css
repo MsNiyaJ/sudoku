@@ -7,6 +7,7 @@
 
 :root {
   --blue-bg-color: #0070f3;
+  --red-bg-color: red;
 }
 
 /* text-colors */
@@ -115,9 +116,8 @@
   outline: 0;
   cursor: pointer;
 }
-/* 
-.box:hover:not(.disabled), */
-.box:focus:not([disabled]) {
+
+.box:focus:not([disabled]):not(.boxError) {
   color: white;
   background-color: var(--blue-bg-color);
 }
@@ -129,6 +129,11 @@
 .box[disabled] {
   background-color: rgb(255, 255, 255);
   color: rgb(48, 48, 48);
+}
+
+.box.boxError {
+  color: white;
+  background-color: var(--red-bg-color);
 }
 
 /* Remove arrows from number input  */
