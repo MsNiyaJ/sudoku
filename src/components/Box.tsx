@@ -27,12 +27,9 @@ const Box = ({ value = '', disabled = false, answer }: BoxProps) => {
   };
 
   useEffect(() => {
-    setValue(value);
-  }, [value]);
-
-  useEffect(() => {
     setValue('');
-  }, [difficulty]);
+    setValue(value);
+  }, [value, difficulty]);
 
   return (
     <input
