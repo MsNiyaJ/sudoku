@@ -8,6 +8,8 @@ export type DifficultyListType = {
 export type SudokuContextType = {
   difficulty: Difficulty;
   setDifficulty: (newDifficulty: Difficulty) => void;
+  winningBoard: Board;
+  setWinningBoard: (board: Board) => void;
 };
 
 export type Board = (string | number)[][];

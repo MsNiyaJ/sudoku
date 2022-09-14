@@ -7,9 +7,9 @@ export interface BoxProps {
 }
 
 const Box = ({ value = '', disabled = false, answer }: BoxProps) => {
-  const [boxValue, setValue] = useState<string | number>(value);
+  const [boxValue, setBoxValue] = useState<string | number>(value);
   const [boxError, setBoxError] = useState(false);
-  const { difficulty } = useContext(SudokuContext);
+  const { difficulty, winningBoard } = useContext(SudokuContext);
 
   const onChange = (e: any) => {
     setBoxError(false);
@@ -22,15 +22,15 @@ const Box = ({ value = '', disabled = false, answer }: BoxProps) => {
       setBoxError(false);
     }
 
-    if (value === 0) setValue('');
-    else if (!isNaN(value)) setValue(value);
+    if (value === 0) setBoxValue('');
+    else if (!isNaN(value)) setBoxValue(value);
   };
 
   useEffect(() => {
     setBoxError(false);
-    setValue('');
-    setValue(value);
-  }, [value, difficulty]);
+    setBoxValue('');
+    setBoxValue(value);
+  }, [value, difficulty, winningBoard]);
 
   return (
     <input
