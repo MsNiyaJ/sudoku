@@ -58,19 +58,19 @@ body {
   background-color: rgba(0, 0, 0, 0.343);
   width: 100vw;
   height: 100vh;
+  overflow-y: scroll;
 }
 
 .modal {
   background-color: white;
-  width: 500px;
-  max-height: 500px;
+  width: 270px;
+  /* max-height: 500px; */
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin: 10rem auto;
   z-index: 2;
-  overflow-y: scroll;
 }
 
 .game-instructions {
@@ -237,14 +237,19 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+/* Larger Phone & Up */
 @media (min-width: 425px) {
   .box {
     width: 2.5rem;
     height: 2.5rem;
   }
+
+  .modal {
+    width: 400px;
+  }
 }
 
-/* media queries */
+/* Tablet & Up */
 @media (min-width: 768px) {
   .navbar,
   .action-bar {
@@ -254,6 +259,10 @@ input[type='number'] {
   .box {
     width: 3rem;
     height: 3rem;
+  }
+
+  .modal {
+    width: 500px;
   }
 
   .new-game-button {
