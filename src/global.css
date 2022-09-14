@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 * {
+  margin: 0;
   font-family: 'Trebuchet MS', 'Montserrat', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -11,10 +12,16 @@
 }
 
 body {
+  position: relative;
   background-image: linear-gradient(#d17fb7, var(--blue-bg-color));
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
+}
+
+/* text align */
+.text-center {
+  text-align: center;
 }
 
 /* text-colors */
@@ -44,6 +51,57 @@ body {
   width: 100%;
 }
 
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.343);
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal {
+  background-color: white;
+  width: 500px;
+  max-height: 500px;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10rem auto;
+  z-index: 2;
+  overflow-y: scroll;
+}
+
+.game-instructions {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px 0;
+  padding-right: 5px;
+}
+
+.instructions-title {
+  text-align: center;
+}
+
+.instructions-close-btn {
+  padding: 10px 5px;
+  background-color: var(--blue-bg-color);
+  border: 1px solid white;
+  color: white;
+  border-radius: 3px;
+  width: 90%;
+  margin-top: auto;
+  align-self: center;
+  cursor: pointer;
+}
+
+.instructions-close-btn:hover {
+  background-color: var(--hover-blue-bg-color);
+}
+
 .nav-links {
   width: 100%;
   display: flex;
@@ -52,7 +110,8 @@ body {
 
 .nav-item {
   text-decoration: none;
-  color: black;
+  cursor: pointer;
+  font-size: 18px;
 }
 
 .nav-item:hover {
@@ -71,7 +130,7 @@ body {
 .new-game-button {
   padding: 10px 5px;
   background-color: var(--blue-bg-color);
-  border: 1px solid white;
+  border: none;
   color: white;
   border-radius: 3px;
 }
@@ -88,12 +147,10 @@ body {
 }
 
 .dropdown-menu {
+  background-color: transparent;
   border: none;
-  background-color: var(--blue-bg-color);
-  color: white;
-  padding: 8px 0;
-  border: 1px solid white;
-  border-radius: 3px;
+  font-size: 20px;
+  color: black;
 }
 
 .dropdown-menu:focus {
@@ -101,7 +158,7 @@ body {
 }
 
 .dropdown-menu:hover {
-  background-color: var(--hover-blue-bg-color);
+  color: var(--hover-blue-bg-color);
 }
 
 .board-container {
@@ -197,5 +254,9 @@ input[type='number'] {
   .box {
     width: 3rem;
     height: 3rem;
+  }
+
+  .new-game-button {
+    font-size: 15px;
   }
 }
