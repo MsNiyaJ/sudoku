@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 * {
-  font-family: 'Montserrat', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Montserrat', 'Lucida Sans', Arial, sans-serif;
 }
 
 :root {
@@ -69,7 +69,7 @@ body {
 }
 
 .new-game-button {
-  padding: 10px;
+  padding: 10px 5px;
   background-color: var(--blue-bg-color);
   border: 1px solid white;
   color: white;
@@ -139,9 +139,8 @@ body {
 }
 
 .box {
-  padding: 3px;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   text-align: center;
   font-size: 1.5rem;
   border: 0;
@@ -179,6 +178,13 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+@media (min-width: 425px) {
+  .box {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 /* media queries */
