@@ -36,5 +36,5 @@ Start the server
 
 
 ## Author
-- [@MsNiyaJ](https://www.github.com/MsNiyaJ)
+- [Shaniya Malcolm](https://www.github.com/MsNiyaJ)
 
