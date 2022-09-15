@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { SudokuContext } from '../context/sudokuContext';
-import { Board } from '../types';
 export interface BoxProps {
   value?: string | number;
   disabled?: boolean; // true if value is an empty string
