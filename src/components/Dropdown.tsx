@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Difficulty, DifficultyListType } from '../types';
 import { SudokuContext } from '../context/sudokuContext';
+import { randomBoard } from '../helper/board-generator';
 
 const difficultyList: DifficultyListType[] = [
   {
@@ -19,12 +20,14 @@ const difficultyList: DifficultyListType[] = [
 
 const Dropdown: React.FC = () => {
   // Get the context
-  const { difficulty, setDifficulty } = useContext(SudokuContext);
+  const { difficulty, setDifficulty, setWinningBoard } =
+    useContext(SudokuContext);
 
   // Handle the change of difficulty
   const handleChange = (e: { target: { value: string } }) => {
     const newDifficulty = e.target.value as Difficulty;
-    setDifficulty(newDifficulty); // update the local state
+    setDifficulty(newDifficulty); 
+    setWinningBoard(randomBoard());
   };
 
   return (
