@@ -9,14 +9,13 @@
   --disabled-box-bg-color: #f3f3f3;
   --blue-bg-color: #0070f3;
   --hover-blue-bg-color: #034998;
+  background-color: var(--blue-bg-color);
 }
 
 body {
   position: relative;
   background-image: linear-gradient(#d17fb7, var(--blue-bg-color));
   background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
 }
 
 /* text align */
@@ -196,6 +195,9 @@ body {
 .board-container {
   display: flex;
   justify-content: center;
+  width: 270px;
+  margin: auto;
+  padding-bottom: 4rem;
 }
 
 .board {
@@ -215,6 +217,15 @@ body {
   border-bottom: 3px solid black;
 }
 
+.box {
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 0;
+  outline: 0;
+}
+
 .box:not(:last-child) {
   border-right: 1px solid black;
 }
@@ -225,15 +236,6 @@ body {
 
 .box:nth-child(9n) {
   border-right: 0;
-}
-
-.box {
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  font-size: 1.5rem;
-  border: 0;
-  outline: 0;
 }
 
 .box:focus:not([disabled]):not(.boxError) {
@@ -281,8 +283,8 @@ input[type='number'] {
   }
 }
 
-/* Tablet & Up */
-@media (min-width: 768px) {
+/* Laptop & Up */
+@media (min-width: 987px) {
   .navbar,
   .action-bar {
     margin: 0 auto;
