@@ -195,8 +195,6 @@ body {
 .board-container {
   display: flex;
   justify-content: center;
-  width: 270px;
-  margin: auto;
   padding-bottom: 4rem;
 }
 
@@ -238,17 +236,17 @@ body {
   border-right: 0;
 }
 
-.box:focus:not([disabled]):not(.boxError) {
+.box:focus:not(:disabled):not(.boxError) {
   color: white;
   background-color: var(--blue-bg-color);
 }
 
-.box:not([disabled]) {
+.box:not(:disabled) {
   cursor: pointer;
   color: var(--blue-bg-color);
 }
 
-.box[disabled] {
+.box:disabled {
   background-color: var(--disabled-box-bg-color);
   color: rgb(67, 67, 67);
 }
