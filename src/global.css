@@ -249,7 +249,7 @@ body {
 }
 
 .box:disabled {
-  opacity: 1;
+  opacity: 1; /* https://stackoverflow.com/questions/262158/disabled-input-text-color-on-ios */
   background-color: var(--disabled-box-bg-color);
   -webkit-text-fill-color: rgb(67, 67, 67);
   color: rgb(67, 67, 67);
