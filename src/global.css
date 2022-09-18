@@ -60,12 +60,14 @@ body {
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
+  opacity: 1;
 }
 
 .modal-container::-webkit-scrollbar {
   /* WebKit */
   width: 0;
   height: 0;
+  opacity: 1;
 }
 
 .modal {
@@ -247,7 +249,9 @@ body {
 }
 
 .box:disabled {
+  opacity: 1;
   background-color: var(--disabled-box-bg-color);
+  -webkit-text-fill-color: rgb(67, 67, 67);
   color: rgb(67, 67, 67);
 }
 
