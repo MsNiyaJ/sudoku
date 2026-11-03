@@ -18,7 +18,7 @@ const Game = () => {
 
   const checkForWin = () => {
     const boxes: HTMLInputElement[] = Array.from(
-      document.querySelectorAll('.box')
+      document.querySelectorAll('.box'),
     );
 
     const answers = winningBoard.join().split(',').toString();
@@ -36,6 +36,7 @@ const Game = () => {
             {row.map((box, boxIndex) => (
               <Box
                 key={boxIndex}
+                id={`${rowIndex}-${boxIndex}`}
                 value={box}
                 answer={winningBoard[rowIndex][boxIndex]}
                 disabled={box === '' ? false : true}

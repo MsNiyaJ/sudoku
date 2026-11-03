@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { SudokuContext } from '../context/sudokuContext';
 export interface BoxProps {
+  id: string;
   value?: string | number;
   disabled?: boolean; // true if value is an empty string
   answer: string | number;
@@ -8,6 +9,7 @@ export interface BoxProps {
 }
 
 const Box = ({
+  id,
   value = '',
   disabled = false,
   answer,
@@ -41,6 +43,7 @@ const Box = ({
 
   return (
     <input
+      id={id}
       type="text"
       className={`box ${boxError ? 'boxError' : ''}`}
       disabled={disabled}
